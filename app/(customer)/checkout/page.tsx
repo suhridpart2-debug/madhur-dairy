@@ -2,16 +2,24 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 // FILE: app/(customer)/checkout/page.tsx  — Multi-step checkout
 // ═══════════════════════════════════════════════════════════════════════════════
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Clock, CreditCard, CheckCircle, ChevronRight, ChevronLeft } from 'lucide-react';
+import {
+  MapPin,
+  Clock,
+  CreditCard,
+  CheckCircle,
+  ChevronRight,
+  ChevronLeft,
+  Plus,
+} from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { addressSchema, AddressInput } from '@/lib/validations';
-import { formatCurrency, formatDate, getDeliveryDates } from '@/lib/utils';
+import { formatCurrency, getDeliveryDates } from '@/lib/utils';
 import { DELIVERY_SLOTS, INDIAN_STATES } from '@/lib/constants';
 import toast from 'react-hot-toast';
 
@@ -22,31 +30,104 @@ const STEPS = [
   { id: 4, label: 'Review', icon: CheckCircle },
 ];
 
+const STORAGE_KEY = 'user_address';
+
 export default function CheckoutPage() {
   const { data: session } = useSession();
   const router = useRouter();
   const { items, total, clearCart } = useCartStore();
+
   const [step, setStep] = useState(1);
   const [address, setAddress] = useState<AddressInput | null>(null);
+  const [savedAddress, setSavedAddress] = useState<AddressInput | null>(null);
+  const [showAddressForm, setShowAddressForm] = useState(true);
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
   const [placing, setPlacing] = useState(false);
 
   const deliveryDates = getDeliveryDates(3);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved) as AddressInput;
+        setSavedAddress(parsed);
+        setAddress(parsed);
+        setShowAddressForm(false);
+      } catch (error) {
+        console.error('Failed to parse saved address:', error);
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+  }, []);
+
+  const defaultValues = useMemo(
+    () =>
+      savedAddress || {
+        fullName: '',
+        phone: '',
+        street: '',
+        city: '',
+        state: '',
+        pincode: '',
+        landmark: '',
+      },
+    [savedAddress]
+  );
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<AddressInput>({ resolver: zodResolver(addressSchema) });
+    reset,
+  } = useForm<AddressInput>({
+    resolver: zodResolver(addressSchema),
+    defaultValues,
+  });
+
+  useEffect(() => {
+    reset(defaultValues);
+  }, [defaultValues, reset]);
 
   const onAddressSubmit = (data: AddressInput) => {
     setAddress(data);
+    setSavedAddress(data);
+
+    if (typeof window !== 'undefined') {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    }
+
+    toast.success('Address saved successfully');
+    setShowAddressForm(false);
     setStep(2);
+  };
+
+  const handleUseSavedAddress = () => {
+    if (!savedAddress) return;
+    setAddress(savedAddress);
+    toast.success('Saved address selected');
+    setStep(2);
+  };
+
+  const handleAddNewAddress = () => {
+    setShowAddressForm(true);
+    reset({
+      fullName: '',
+      phone: '',
+      street: '',
+      city: '',
+      state: '',
+      pincode: '',
+      landmark: '',
+    });
   };
 
   const placeOrder = async () => {
     if (!address || !selectedDate || !selectedSlot) return;
+
     setPlacing(true);
 
     try {
@@ -54,7 +135,10 @@ export default function CheckoutPage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          items: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+          items: items.map((i) => ({
+            productId: i.productId,
+            quantity: i.quantity,
+          })),
           address,
           deliverySlot: { date: selectedDate, timeSlot: selectedSlot },
           paymentMethod: 'cod',
@@ -63,6 +147,10 @@ export default function CheckoutPage() {
 
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to place order');
+
+      if (typeof window !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(address));
+      }
 
       clearCart();
       toast.success('Order placed successfully!');
@@ -79,8 +167,12 @@ export default function CheckoutPage() {
       <div className="min-h-screen flex items-center justify-center pt-20">
         <div className="text-center">
           <span className="text-6xl block mb-4">🛒</span>
-          <h2 className="font-heading text-2xl text-gray-900 mb-2">Your cart is empty</h2>
-          <a href="/products" className="btn-primary inline-flex mt-4">Browse Products</a>
+          <h2 className="font-heading text-2xl text-gray-900 mb-2">
+            Your cart is empty
+          </h2>
+          <a href="/products" className="btn-primary inline-flex mt-4">
+            Browse Products
+          </a>
         </div>
       </div>
     );
@@ -91,12 +183,12 @@ export default function CheckoutPage() {
       <div className="section-container max-w-4xl">
         <h1 className="font-heading text-3xl text-gray-900 mb-8">Checkout</h1>
 
-        {/* Step indicator */}
         <div className="flex items-center mb-10">
           {STEPS.map((s, i) => {
             const Icon = s.icon;
             const isActive = s.id === step;
             const isDone = s.id < step;
+
             return (
               <div key={s.id} className="flex items-center flex-1 last:flex-none">
                 <div className="flex flex-col items-center">
@@ -111,12 +203,25 @@ export default function CheckoutPage() {
                   >
                     {isDone ? <CheckCircle size={18} /> : <Icon size={18} />}
                   </div>
-                  <p className={`text-xs font-semibold mt-1.5 ${isActive ? 'text-brand-green' : isDone ? 'text-gray-600' : 'text-gray-400'}`}>
+                  <p
+                    className={`text-xs font-semibold mt-1.5 ${
+                      isActive
+                        ? 'text-brand-green'
+                        : isDone
+                        ? 'text-gray-600'
+                        : 'text-gray-400'
+                    }`}
+                  >
                     {s.label}
                   </p>
                 </div>
+
                 {i < STEPS.length - 1 && (
-                  <div className={`flex-1 h-0.5 mx-3 mb-4 rounded transition-all ${isDone ? 'bg-brand-green' : 'bg-gray-200'}`} />
+                  <div
+                    className={`flex-1 h-0.5 mx-3 mb-4 rounded transition-all ${
+                      isDone ? 'bg-brand-green' : 'bg-gray-200'
+                    }`}
+                  />
                 )}
               </div>
             );
@@ -124,10 +229,8 @@ export default function CheckoutPage() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main content */}
           <div className="lg:col-span-2">
             <AnimatePresence mode="wait">
-              {/* STEP 1: Address */}
               {step === 1 && (
                 <motion.div
                   key="step1"
@@ -139,56 +242,202 @@ export default function CheckoutPage() {
                   <h2 className="font-semibold text-lg text-gray-900 mb-6 flex items-center gap-2">
                     <MapPin size={18} className="text-brand-green" /> Delivery Address
                   </h2>
-                  <form onSubmit={handleSubmit(onAddressSubmit)} className="space-y-4">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Full Name *</label>
-                        <input {...register('fullName')} className="input-field" placeholder="Your full name" />
-                        {errors.fullName && <p className="text-red-500 text-xs mt-1">{errors.fullName.message}</p>}
-                      </div>
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Phone *</label>
-                        <input {...register('phone')} className="input-field" placeholder="10-digit mobile number" />
-                        {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone.message}</p>}
+
+                  {savedAddress && !showAddressForm && (
+                    <div className="mb-6">
+                      <div className="border-2 border-brand-green bg-brand-green-pale rounded-2xl p-5">
+                        <div className="flex items-start justify-between gap-3 mb-3">
+                          <div>
+                            <p className="text-xs font-bold uppercase tracking-wider text-brand-green mb-1">
+                              Last Used Address
+                            </p>
+                            <p className="font-semibold text-gray-900">
+                              {savedAddress.fullName}
+                            </p>
+                            <p className="text-sm text-gray-600 mt-1">
+                              {savedAddress.street}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              {savedAddress.city}, {savedAddress.state} - {savedAddress.pincode}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              📞 {savedAddress.phone}
+                            </p>
+                            {savedAddress.landmark && (
+                              <p className="text-sm text-gray-500 mt-1">
+                                Landmark: {savedAddress.landmark}
+                              </p>
+                            )}
+                          </div>
+                          <span className="text-xs font-bold bg-white text-brand-green px-3 py-1 rounded-full">
+                            Saved
+                          </span>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row gap-3 mt-4">
+                          <button
+                            type="button"
+                            onClick={handleUseSavedAddress}
+                            className="btn-primary flex items-center justify-center gap-2"
+                          >
+                            Use This Address <ChevronRight size={18} />
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleAddNewAddress}
+                            className="btn-secondary flex items-center justify-center gap-2"
+                          >
+                            <Plus size={16} /> Add New Address
+                          </button>
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1.5">Street Address *</label>
-                      <input {...register('street')} className="input-field" placeholder="House no., street, area" />
-                      {errors.street && <p className="text-red-500 text-xs mt-1">{errors.street.message}</p>}
-                    </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">City *</label>
-                        <input {...register('city')} className="input-field" placeholder="Pune" />
-                        {errors.city && <p className="text-red-500 text-xs mt-1">{errors.city.message}</p>}
+                  )}
+
+                  {(!savedAddress || showAddressForm) && (
+                    <form onSubmit={handleSubmit(onAddressSubmit)} className="space-y-4">
+                      {savedAddress && (
+                        <div className="flex justify-end">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setShowAddressForm(false);
+                              reset(savedAddress);
+                            }}
+                            className="text-sm font-semibold text-brand-green"
+                          >
+                            ← Back to saved address
+                          </button>
+                        </div>
+                      )}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                            Full Name *
+                          </label>
+                          <input
+                            {...register('fullName')}
+                            className="input-field"
+                            placeholder="Your full name"
+                          />
+                          {errors.fullName && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.fullName.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                            Phone *
+                          </label>
+                          <input
+                            {...register('phone')}
+                            className="input-field"
+                            placeholder="10-digit mobile number"
+                          />
+                          {errors.phone && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.phone.message}
+                            </p>
+                          )}
+                        </div>
                       </div>
+
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">State *</label>
-                        <select {...register('state')} className="input-field">
-                          <option value="">Select state</option>
-                          {INDIAN_STATES.map((s) => <option key={s} value={s}>{s}</option>)}
-                        </select>
-                        {errors.state && <p className="text-red-500 text-xs mt-1">{errors.state.message}</p>}
+                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                          Street Address *
+                        </label>
+                        <input
+                          {...register('street')}
+                          className="input-field"
+                          placeholder="House no., street, area"
+                        />
+                        {errors.street && (
+                          <p className="text-red-500 text-xs mt-1">
+                            {errors.street.message}
+                          </p>
+                        )}
                       </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                            City *
+                          </label>
+                          <input
+                            {...register('city')}
+                            className="input-field"
+                            placeholder="Pune"
+                          />
+                          {errors.city && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.city.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                            State *
+                          </label>
+                          <select {...register('state')} className="input-field">
+                            <option value="">Select state</option>
+                            {INDIAN_STATES.map((s) => (
+                              <option key={s} value={s}>
+                                {s}
+                              </option>
+                            ))}
+                          </select>
+                          {errors.state && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.state.message}
+                            </p>
+                          )}
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                            Pincode *
+                          </label>
+                          <input
+                            {...register('pincode')}
+                            className="input-field"
+                            placeholder="411045"
+                            maxLength={6}
+                          />
+                          {errors.pincode && (
+                            <p className="text-red-500 text-xs mt-1">
+                              {errors.pincode.message}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">Pincode *</label>
-                        <input {...register('pincode')} className="input-field" placeholder="411045" maxLength={6} />
-                        {errors.pincode && <p className="text-red-500 text-xs mt-1">{errors.pincode.message}</p>}
+                        <label className="block text-sm font-semibold text-gray-700 mb-1.5">
+                          Landmark (optional)
+                        </label>
+                        <input
+                          {...register('landmark')}
+                          className="input-field"
+                          placeholder="Near school, park, etc."
+                        />
                       </div>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-1.5">Landmark (optional)</label>
-                      <input {...register('landmark')} className="input-field" placeholder="Near school, park, etc." />
-                    </div>
-                    <button type="submit" className="btn-primary w-full flex items-center justify-center gap-2 mt-2">
-                      Continue to Delivery <ChevronRight size={18} />
-                    </button>
-                  </form>
+
+                      <button
+                        type="submit"
+                        className="btn-primary w-full flex items-center justify-center gap-2 mt-2"
+                      >
+                        Continue to Delivery <ChevronRight size={18} />
+                      </button>
+                    </form>
+                  )}
                 </motion.div>
               )}
 
-              {/* STEP 2: Delivery Slot */}
               {step === 2 && (
                 <motion.div
                   key="step2"
@@ -256,7 +505,10 @@ export default function CheckoutPage() {
                   </div>
 
                   <div className="flex gap-3 mt-6">
-                    <button onClick={() => setStep(1)} className="btn-secondary flex items-center gap-2">
+                    <button
+                      onClick={() => setStep(1)}
+                      className="btn-secondary flex items-center gap-2"
+                    >
                       <ChevronLeft size={18} /> Back
                     </button>
                     <button
@@ -275,7 +527,6 @@ export default function CheckoutPage() {
                 </motion.div>
               )}
 
-              {/* STEP 3: Payment */}
               {step === 3 && (
                 <motion.div
                   key="step3"
@@ -297,18 +548,24 @@ export default function CheckoutPage() {
                       </div>
                       <CheckCircle size={20} className="text-brand-green" />
                     </div>
+
                     <div className="flex items-center gap-4 p-5 rounded-xl border-2 border-gray-200 opacity-60 cursor-not-allowed">
                       <span className="text-2xl">💳</span>
                       <div className="flex-1">
                         <p className="font-semibold text-gray-900">Online Payment</p>
                         <p className="text-sm text-gray-500">UPI, Cards — Coming Soon</p>
                       </div>
-                      <span className="text-xs font-bold bg-gray-200 text-gray-600 px-2 py-1 rounded-full">Soon</span>
+                      <span className="text-xs font-bold bg-gray-200 text-gray-600 px-2 py-1 rounded-full">
+                        Soon
+                      </span>
                     </div>
                   </div>
 
                   <div className="flex gap-3 mt-6">
-                    <button onClick={() => setStep(2)} className="btn-secondary flex items-center gap-2">
+                    <button
+                      onClick={() => setStep(2)}
+                      className="btn-secondary flex items-center gap-2"
+                    >
                       <ChevronLeft size={18} /> Back
                     </button>
                     <button
@@ -321,7 +578,6 @@ export default function CheckoutPage() {
                 </motion.div>
               )}
 
-              {/* STEP 4: Review */}
               {step === 4 && (
                 <motion.div
                   key="step4"
@@ -336,24 +592,46 @@ export default function CheckoutPage() {
 
                   <div className="space-y-4 mb-6">
                     <div className="p-4 bg-gray-50 rounded-xl">
-                      <p className="text-xs font-bold uppercase text-gray-400 mb-2 tracking-wider">Delivery Address</p>
+                      <p className="text-xs font-bold uppercase text-gray-400 mb-2 tracking-wider">
+                        Delivery Address
+                      </p>
                       <p className="text-sm text-gray-900 font-medium">{address?.fullName}</p>
-                      <p className="text-sm text-gray-600">{address?.street}, {address?.city} — {address?.pincode}</p>
+                      <p className="text-sm text-gray-600">
+                        {address?.street}, {address?.city} — {address?.pincode}
+                      </p>
                       <p className="text-sm text-gray-600">📞 {address?.phone}</p>
                     </div>
+
                     <div className="p-4 bg-gray-50 rounded-xl">
-                      <p className="text-xs font-bold uppercase text-gray-400 mb-2 tracking-wider">Delivery Slot</p>
-                      <p className="text-sm text-gray-900 font-medium">{selectedDate && new Date(selectedDate).toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' })}</p>
+                      <p className="text-xs font-bold uppercase text-gray-400 mb-2 tracking-wider">
+                        Delivery Slot
+                      </p>
+                      <p className="text-sm text-gray-900 font-medium">
+                        {selectedDate &&
+                          new Date(selectedDate).toLocaleDateString('en-IN', {
+                            weekday: 'long',
+                            day: 'numeric',
+                            month: 'long',
+                          })}
+                      </p>
                       <p className="text-sm text-gray-600">⏰ {selectedSlot}</p>
                     </div>
+
                     <div className="p-4 bg-gray-50 rounded-xl">
-                      <p className="text-xs font-bold uppercase text-gray-400 mb-2 tracking-wider">Payment</p>
-                      <p className="text-sm text-gray-900 font-medium">💵 Cash on Delivery</p>
+                      <p className="text-xs font-bold uppercase text-gray-400 mb-2 tracking-wider">
+                        Payment
+                      </p>
+                      <p className="text-sm text-gray-900 font-medium">
+                        💵 Cash on Delivery
+                      </p>
                     </div>
                   </div>
 
                   <div className="flex gap-3">
-                    <button onClick={() => setStep(3)} className="btn-secondary flex items-center gap-2">
+                    <button
+                      onClick={() => setStep(3)}
+                      className="btn-secondary flex items-center gap-2"
+                    >
                       <ChevronLeft size={18} /> Back
                     </button>
                     <button
@@ -376,22 +654,30 @@ export default function CheckoutPage() {
             </AnimatePresence>
           </div>
 
-          {/* Sidebar: Order summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl p-6 shadow-card border border-gray-100 sticky top-28">
               <h3 className="font-semibold text-gray-900 mb-4">Order Summary</h3>
               <div className="space-y-3 mb-5">
                 {items.map((item) => (
                   <div key={item.productId} className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-brand-green-pale flex items-center justify-center text-lg shrink-0">🥛</div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-gray-900 truncate">{item.name}</p>
-                      <p className="text-xs text-gray-500">{item.volume} × {item.quantity}</p>
+                    <div className="w-10 h-10 rounded-lg bg-brand-green-pale flex items-center justify-center text-lg shrink-0">
+                      🥛
                     </div>
-                    <p className="text-sm font-semibold">{formatCurrency(item.price * item.quantity)}</p>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium text-gray-900 truncate">
+                        {item.name}
+                      </p>
+                      <p className="text-xs text-gray-500">
+                        {item.volume} × {item.quantity}
+                      </p>
+                    </div>
+                    <p className="text-sm font-semibold">
+                      {formatCurrency(item.price * item.quantity)}
+                    </p>
                   </div>
                 ))}
               </div>
+
               <div className="border-t border-gray-100 pt-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal</span>
