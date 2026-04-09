@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Google Fonts ─────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Serif+Display&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+
+/* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
+:root {
+  --color-green: #2D7A3A;
+  --color-green-light: #4CAF50;
+  --color-green-pale: #E8F5E9;
+  --color-red: #C0392B;
+  --color-red-pale: #FDECEA;
+  --color-deep-blue: #1A3A5C;
+  --color-warm-orange: #E67E22;
+  --color-soft-gold: #D4AF37;
+  --color-cream: #FEFCF7;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-heading: 'DM Serif Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 12px 32px rgba(0, 0, 0, 0.12);
+  --shadow-premium: 0 20px 60px rgba(45, 122, 58, 0.15);
+}
+
+/* ─── Font CSS Variables for Tailwind ───────────────────────────────────────── */
+html {
+  --font-playfair: 'Playfair Display';
+  --font-dm-serif: 'DM Serif Display';
+  --font-dm-sans: 'DM Sans';
+  --font-jetbrains: 'JetBrains Mono';
+}
+
+/* ─── Base Styles ───────────────────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: #ffffff;
+  color: #111827;
+  min-height: 100vh;
+}
+
+/* ─── Typography Utilities ──────────────────────────────────────────────────── */
+@layer components {
+  .font-display { font-family: var(--font-display); }
+  .font-heading { font-family: var(--font-heading); }
+  .font-mono-brand { font-family: var(--font-mono); }
+
+  /* Premium card */
+  .card-premium {
+    @apply bg-white rounded-2xl border border-gray-100 shadow-card 
+           transition-all duration-300 hover:-translate-y-1 hover:shadow-hover;
+  }
+
+  /* Green CTA button */
+  .btn-primary {
+    @apply bg-brand-green text-white font-semibold rounded-xl px-6 py-3
+           shadow-md hover:bg-brand-green-light hover:shadow-lg 
+           transition-all duration-200 active:scale-95;
+  }
+
+  /* Outlined button */
+  .btn-secondary {
+    @apply bg-white text-brand-green font-semibold rounded-xl px-6 py-3
+           border-2 border-brand-green hover:bg-brand-green-pale
+           transition-all duration-200 active:scale-95;
+  }
+
+  /* Input field */
+  .input-field {
+    @apply w-full border border-gray-200 rounded-xl px-4 py-3 
+           text-gray-900 placeholder-gray-400 bg-white
+           focus:outline-none focus:ring-2 focus:ring-brand-green focus:border-transparent
+           transition-all duration-200;
+  }
+
+  /* Status chips */
+  .chip-placed { @apply bg-blue-100 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full; }
+  .chip-confirmed { @apply bg-green-100 text-green-700 text-xs font-semibold px-3 py-1 rounded-full; }
+  .chip-out_for_delivery { @apply bg-orange-100 text-orange-700 text-xs font-semibold px-3 py-1 rounded-full; }
+  .chip-delivered { @apply bg-gray-100 text-gray-600 text-xs font-semibold px-3 py-1 rounded-full; }
+  .chip-cancelled { @apply bg-red-100 text-red-700 text-xs font-semibold px-3 py-1 rounded-full; }
+
+  /* Section container */
+  .section-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Section label (small caps above heading) */
+  .section-label {
+    @apply text-xs font-bold uppercase tracking-widest text-brand-green;
+  }
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f9fafb; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* ─── Float Animation ───────────────────────────────────────────────────────── */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(-6px) rotate(-1deg); }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float-slow { animation: float 9s ease-in-out infinite; }
+.animate-float-delay { animation: float 6s ease-in-out infinite 1.5s; }
+
+/* ─── Page transition ───────────────────────────────────────────────────────── */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-enter { animation: pageEnter 0.4s ease-out forwards; }
+
+/* ─── Gradient text ─────────────────────────────────────────────────────────── */
+.text-gradient-green {
+  background: linear-gradient(135deg, #2D7A3A, #4CAF50);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glass effect ──────────────────────────────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
