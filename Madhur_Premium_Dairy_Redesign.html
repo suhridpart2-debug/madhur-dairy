@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Madhur Dairy | Crafted for Purity</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=Manrope:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-fixed": "#00201a",
+                        "surface": "#fcf9f2",
+                        "surface-bright": "#fcf9f2",
+                        "on-secondary-container": "#486a51",
+                        "on-tertiary-fixed": "#052013",
+                        "on-secondary-fixed-variant": "#2c4e36",
+                        "primary": "#003329",
+                        "on-surface-variant": "#3f4947",
+                        "on-secondary-fixed": "#00210e",
+                        "on-tertiary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-background": "#1c1c18",
+                        "primary-container": "#004b3e",
+                        "outline": "#707977",
+                        "on-secondary": "#ffffff",
+                        "tertiary-container": "#2d4839",
+                        "background": "#fcf9f2",
+                        "on-error-container": "#93000a",
+                        "secondary-fixed-dim": "#aad0b1",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#81d6c0",
+                        "on-tertiary-container": "#98b6a2",
+                        "surface-container-high": "#ebe8e1",
+                        "outline-variant": "#bfc9c6",
+                        "tertiary-fixed-dim": "#afceb9",
+                        "inverse-surface": "#31312c",
+                        "surface-container-low": "#f6f3ec",
+                        "surface-dim": "#dcdad3",
+                        "tertiary-fixed": "#cbead5",
+                        "secondary": "#43664d",
+                        "on-primary-fixed-variant": "#005143",
+                        "inverse-primary": "#81d6c0",
+                        "surface-tint": "#006b59",
+                        "surface-variant": "#e5e2db",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#173123",
+                        "secondary-container": "#c2e9c9",
+                        "on-surface": "#1c1c18",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#69bea8",
+                        "surface-container": "#f0eee7",
+                        "inverse-on-surface": "#f3f0ea",
+                        "surface-container-highest": "#e5e2db",
+                        "primary-fixed": "#9df3dc",
+                        "on-tertiary-fixed-variant": "#324c3d",
+                        "on-error": "#ffffff",
+                        "secondary-fixed": "#c5eccc"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Inter"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #fcf9f2; color: #1c1c18; }
+        .font-serif { font-family: 'Noto Serif', serif; }
+        .font-label { font-family: 'Manrope', sans-serif; }
+        .glass-nav { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-surface selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<header class="sticky top-0 z-50 w-full bg-emerald-50/70 dark:bg-zinc-950/70 backdrop-blur-xl shadow-sm shadow-emerald-900/5">
+<nav class="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
+<div class="text-2xl font-serif font-bold text-emerald-950 dark:text-emerald-50 tracking-tighter">
+                Madhur
+            </div>
+<div class="hidden md:flex items-center space-x-10 font-serif text-lg tracking-tight leading-relaxed">
+<a class="text-emerald-900 dark:text-emerald-400 font-bold border-b-2 border-emerald-900 dark:border-emerald-400 pb-1" href="#">Our Heritage</a>
+<a class="text-emerald-800/80 dark:text-emerald-200/80 hover:text-emerald-950 dark:hover:text-white transition-colors" href="#">Products</a>
+<a class="text-emerald-800/80 dark:text-emerald-200/80 hover:text-emerald-950 dark:hover:text-white transition-colors" href="#">The Farm</a>
+<a class="text-emerald-800/80 dark:text-emerald-200/80 hover:text-emerald-950 dark:hover:text-white transition-colors" href="#">Recipes</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 hover:bg-emerald-100/50 dark:hover:bg-emerald-800/30 rounded-lg transition-all scale-95 duration-200 ease-in-out">
+<span class="material-symbols-outlined text-emerald-900 dark:text-emerald-50">shopping_bag</span>
+<span class="absolute top-0 right-0 bg-primary text-on-primary text-[10px] font-bold px-1.5 py-0.5 rounded-full ring-2 ring-surface">3</span>
+</button>
+<button class="md:hidden">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</nav>
+</header>
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-20 pb-32">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+<div class="z-10">
+<span class="font-label text-sm uppercase tracking-[0.2em] text-on-secondary-container mb-6 block">Legacy of Pure Nutrition</span>
+<h1 class="font-serif text-primary text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-8">
+                    Freshness that <br/><span class="italic font-normal">Whispers Purity.</span>
+</h1>
+<p class="text-on-surface-variant text-lg leading-relaxed max-w-lg mb-10">
+                    Straight from our lush green pastures to your breakfast table within hours. Experience the rich, creamy texture of nature's finest dairy.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary px-10 py-5 rounded-lg font-semibold text-lg hover:bg-primary-container transition-all shadow-xl shadow-primary/10">
+                        Explore Freshness
+                    </button>
+<button class="border border-outline-variant text-primary px-10 py-5 rounded-lg font-semibold text-lg hover:bg-surface-container-low transition-all">
+                        Our Story
+                    </button>
+</div>
+</div>
+<div class="relative">
+<div class="relative rounded-xl overflow-hidden shadow-2xl">
+<img alt="Premium Glass Bottle of Fresh Milk" class="w-full h-[600px] object-cover scale-105 hover:scale-100 transition-transform duration-700" data-alt="Premium glass bottle of fresh milk with condensation on a light wooden table, soft morning sunlight, creamy aesthetic, high-end photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhy8AFz5Mf1bU_6XMmdMPJOQEIkJmQ4TLk4SWjIdpCvlBHnWDDnxs2ESuw6i8SHE0B7I0ugSoJANDfVWjOSKtSgHiTLSN5K2kXhpM6CiWVS2eP36PKBYKqeFVVwbfK46IVmPg68kvdOqpldlu-EKqPtqvcCMY7uHk7kOGLM5Ln0Qf2r_UjlQryL2ohdEe561uWpai7z0avSMUHfBMAZjBGdpI4tk2ZIQbiwoxONAFSopAg_MAty751Ki0nq0K0auJ7575HIaC_2BCZ"/>
+</div>
+<!-- Floating Badges -->
+<div class="absolute -top-6 -right-6 bg-surface-container-lowest p-6 rounded-xl shadow-xl flex items-center gap-4 animate-bounce duration-[3000ms]">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">eco</span>
+<div>
+<p class="font-bold text-primary leading-none">100% Fresh</p>
+<p class="text-xs text-on-surface-variant">Non-Pasteurized</p>
+</div>
+</div>
+<div class="absolute bottom-10 -left-10 bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-xl flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary text-3xl">local_shipping</span>
+<div>
+<p class="font-bold text-primary leading-none">Express Delivery</p>
+<p class="text-xs text-on-surface-variant">Within 4 Hours</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Decorative Background Element -->
+<div class="absolute top-0 right-0 -z-10 w-1/2 h-full bg-gradient-to-l from-secondary-container/20 to-transparent opacity-50 blur-3xl"></div>
+</section>
+<!-- Feature Strip -->
+<section class="bg-surface-container py-12">
+<div class="max-w-7xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-lowest hover:translate-y-[-4px] transition-all duration-300">
+<div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-2xl">water_drop</span>
+</div>
+<div>
+<h3 class="font-bold text-primary">Pure Source</h3>
+<p class="text-sm text-on-surface-variant">Ethically raised happy cattle</p>
+</div>
+</div>
+<div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-lowest hover:translate-y-[-4px] transition-all duration-300">
+<div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-2xl">ac_unit</span>
+</div>
+<div>
+<h3 class="font-bold text-primary">Cold-Chain Delivery</h3>
+<p class="text-sm text-on-surface-variant">Preserving nutrition &amp; taste</p>
+</div>
+</div>
+<div class="flex items-center gap-6 p-6 rounded-xl bg-surface-container-lowest hover:translate-y-[-4px] transition-all duration-300">
+<div class="w-14 h-14 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container">
+<span class="material-symbols-outlined text-2xl">verified_user</span>
+</div>
+<div>
+<h3 class="font-bold text-primary">Zero Preservatives</h3>
+<p class="text-sm text-on-surface-variant">Only nature in every drop</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bestsellers Grid -->
+<section class="py-32 bg-surface">
+<div class="max-w-7xl mx-auto px-8">
+<div class="flex justify-between items-end mb-16">
+<div>
+<span class="font-label text-sm uppercase tracking-widest text-secondary mb-4 block">Shop Fresh</span>
+<h2 class="font-serif text-5xl text-primary font-bold">Our Bestsellers</h2>
+</div>
+<a class="text-primary font-semibold flex items-center gap-2 group" href="#">
+                    View All Products
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+<!-- Product 1 -->
+<div class="group bg-surface-container-low rounded-xl p-6 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,51,41,0.1)]">
+<div class="aspect-[4/5] overflow-hidden rounded-lg mb-6 relative">
+<img alt="Traditional Taak" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Traditional Indian buttermilk in a clay glass, garnishing of coriander and cumin, moody lighting, green herbs around" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDolQx4_Qk_9n2ou6i7Utl40cFDXgZWTgLYI7KcFA66ZTDCPXWT0bNJPSghlU06g-he_brVj3sYEBg3dT2OTKvdkyz0PCX9bjH-uxL29OYHb586pOM3c_nXSoXz2G0hGII5LXnOOWPzQYOZmEcFiY1EJRtAAHvXoda2ORPrLWBKR672Zio0CHWysNWJeCN5mJwTE34CyHGbdV6QlFeglWxtU-2grDs7Br87Wr7Qfdl6omLU6dVNYSu_pWh3E7_9bYTh0nqaUh50moht"/>
+<span class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full uppercase">Refreshing</span>
+</div>
+<h3 class="font-serif text-2xl text-primary mb-1">Traditional Taak</h3>
+<p class="text-on-surface-variant text-sm mb-4">Slow-churned buttermilk with Himalayan salt and cumin.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-primary">$2.49</span>
+<button class="bg-primary text-on-primary p-3 rounded-lg flex items-center justify-center hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Product 2 -->
+<div class="group bg-surface-container-low rounded-xl p-6 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,51,41,0.1)]">
+<div class="aspect-[4/5] overflow-hidden rounded-lg mb-6 relative">
+<img alt="Thick Lassi" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Glass of thick sweet lassi with saffron strands and malai on top, high-end studio lighting, elegant food photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCJ9l8c6aW9uOI5q8n9OQNw9h4umBBkMZllHXxo3fBMjzddIK4NFbNFq4K9k-pppjOVBb0PFpVCY7REOXVVPh4uZMQyt4o_GGNLT0Mozw1N6tp-u_TGAczMYPoSmyRAcFFsuT_8gWEd8FTFGbgvtuDolZD8XrYShrDXIvyhhWhed_NaeJO3RuHEXHDgllqYbDwRUGZ2jnfS4P8OZAgWUbdCaSOGKt6bGK-wpMCoZGrN12XhmmnPpKgfA20e0X3GvrsmjiU-P4E2zD8"/>
+<span class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full uppercase">Classic</span>
+</div>
+<h3 class="font-serif text-2xl text-primary mb-1">Creamy Sweet Lassi</h3>
+<p class="text-on-surface-variant text-sm mb-4">Ultra-thick yogurt drink topped with fresh cream.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-primary">$3.99</span>
+<button class="bg-primary text-on-primary p-3 rounded-lg flex items-center justify-center hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+<!-- Product 3 -->
+<div class="group bg-surface-container-low rounded-xl p-6 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,51,41,0.1)]">
+<div class="aspect-[4/5] overflow-hidden rounded-lg mb-6 relative">
+<img alt="Flavoured Milk" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" data-alt="Bottles of flavored milk with almonds and pistachios around them, vibrant colors, premium packaging display" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACq-DeXEE22-5zN8AgrDYW1QHeh6gjSbUxUkz0fSudfDy4pk7T8dlCAKl7Q21XrPeMaodQKrBt7NSNv9yj3Is7UetO748Ur27CWZx3fc_p73q6oD-ugYYdtKFtD3y6znnNo1YEwiSrX0YgGaiXEbafFxbB81Eo-OUqD8wqBTa11ekX39gx_PVknAEAOdmuyw4-GHZ9GKc2kXdAu8xW8IKhEr9zA-4oh3qFAy--J8qnO2KieUcln4lqT8KHMKeAdEe_yTfBEX2CXJ-x"/>
+<span class="absolute top-4 left-4 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full uppercase">Kid's Choice</span>
+</div>
+<h3 class="font-serif text-2xl text-primary mb-1">Badam Thandai</h3>
+<p class="text-on-surface-variant text-sm mb-4">Nutrient-rich milk with crushed almonds and spices.</p>
+<div class="flex items-center justify-between">
+<span class="text-2xl font-bold text-primary">$3.49</span>
+<button class="bg-primary text-on-primary p-3 rounded-lg flex items-center justify-center hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">add_shopping_cart</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Heritage Story Section -->
+<section class="py-32 bg-surface-container overflow-hidden">
+<div class="max-w-7xl mx-auto px-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="relative grid grid-cols-2 gap-4">
+<div class="space-y-4 pt-12">
+<div class="rounded-xl overflow-hidden shadow-lg h-64">
+<img alt="Lush Farm" class="w-full h-full object-cover" data-alt="Aerial view of a sprawling lush green organic dairy farm at sunrise, misty morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDI61ALLVOzlDRqTn-PCa-D9f5CtuWAnX9PuDs_o1x95rnow5mVsxYC6hnmBO3D3PInWtVIJv5ZeZ1fp0zAuJ15lwdBIvTOT1u7-XQg765oOMNOdurySv8CNKjNedWkFUxn6dGTROYyQe9mHcr-JAJyTcD_TY2khCRLSQMc9AGoCxTAnCIbHpveGgqq7tGF8e_fGZ740RXmRKf0fmqkJpyJ8DySSPzDP5BNfQ4-4VQ5qdTFUaN7UoaugrAJN_aqhwYKUH6prN_d0EOd"/>
+</div>
+<div class="rounded-xl overflow-hidden shadow-lg h-80">
+<img alt="Grazing Cattle" class="w-full h-full object-cover" data-alt="Close up of happy healthy cows grazing in a vibrant green meadow under clear blue sky" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAtNwvPCfmN6fK9akmvEb5WOt0VNjg7WhS8RORx1YG5Y1Tzvau957RvtIVtERAdi_zFVXF8rZx6uh-j30Jdo0HO73-Az8J58ldTTDfm-rvIiWHqPM-Ru9supoulJXLKy7XR6A_tqhR8nSlxjNjubKHbq465gsSJA5c1y-Ko6RtcPYbEBM3Mo78pdNzhhNkBodjZFhfz1sSLhfiRLxGeCPbNkj-AqFbWOkHAx0lgc478sLZziEzL5ybfDR7dBf3tTuiQFt3gmz1dhV_d"/>
+</div>
+</div>
+<div class="space-y-4">
+<div class="rounded-xl overflow-hidden shadow-lg h-80">
+<img alt="Modern Lab" class="w-full h-full object-cover" data-alt="Interior of a ultra-modern clean dairy processing facility with stainless steel equipment and glass walls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnFQMtlAnWCJd2U8M4ROgiFrZ69EdWOJF6sbRznmHYE154iAf-S8-O_mO34EfPLMqcBZu_kgxpPTVLjDyYI_HQu8ZwZrFyi9djxU3YDtoiRc7ZfenKFTkefvDHFVHM9fdDFfHQ3zuO-K2zbIJma6ib6UO39cWFUOe375w-7kLb-56Q5uNGivqB5J-7nZOeAZXoQIuuqxWNBBHEFl_ikfMT17mV8gonve4vRl6uzddQd4Y3rlQV6YUcaoHqCpMHqARA4w_AXCwxV_me"/>
+</div>
+<div class="rounded-xl overflow-hidden shadow-lg h-64">
+<img alt="Milk Testing" class="w-full h-full object-cover" data-alt="Close up of milk quality testing in a laboratory setting with high precision tools" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCitUqHxyzr3ZR3coTV_FVbw9pzLX13YjjJe-njGZTca1kpNTVMQ-lme-GlCf_0JcqDmEYK41lvI4g3iK6PrUy0HS_PyYL6K4OWjR5YsvyAMU9c6nC3pCU-LCWek6mgKgnYm4ArqKZkCazsIlyRd3Pm4UoHJtsfdzmfXcHYqY_0KysFypIEfR9bGyyNaItJ6-nsrhmbmgl4sEGwp7jQaje4yd0GqWV7Vb7wm0Wawn5tVa8rcfRfeIefVeWXtMH5Oqo-pRqT3mJmjcyk"/>
+</div>
+</div>
+</div>
+<div class="lg:pl-10">
+<span class="font-label text-sm uppercase tracking-widest text-secondary mb-6 block">Our Legacy</span>
+<h2 class="font-serif text-5xl text-primary font-bold mb-8 leading-tight">The Madhur Heritage: <br/><span class="font-normal italic">Since 1974</span></h2>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-6">
+                        For nearly five decades, the Madhur family has dedicated itself to the art of pure dairy. What started as a small farm with three cows has evolved into a state-of-the-art heritage facility that blends ancestral wisdom with modern precision.
+                    </p>
+<p class="text-on-surface-variant text-lg leading-relaxed mb-10">
+                        Our philosophy is simple: Treat the earth with respect, the cattle with love, and our customers as family. We believe that purity isn't just a standard—it's a promise.
+                    </p>
+<div class="grid grid-cols-2 gap-8 border-t border-outline-variant/30 pt-10">
+<div>
+<h4 class="text-3xl font-bold text-primary mb-2">50+</h4>
+<p class="text-sm font-label uppercase text-on-surface-variant">Years of Heritage</p>
+</div>
+<div>
+<h4 class="text-3xl font-bold text-primary mb-2">12k+</h4>
+<p class="text-sm font-label uppercase text-on-surface-variant">Happy Families</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonials Section -->
+<section class="py-32 bg-surface overflow-hidden">
+<div class="max-w-7xl mx-auto px-8">
+<div class="text-center mb-20">
+<span class="font-label text-sm uppercase tracking-widest text-secondary mb-4 block">Testimonials</span>
+<h2 class="font-serif text-5xl text-primary font-bold">What Our Community Says</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Testimonial 1 -->
+<div class="p-10 rounded-xl bg-surface-container-low relative">
+<div class="flex gap-1 text-secondary mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface italic leading-loose mb-8">"The quality of the Taak reminds me of my childhood summers in the village. It's incredibly authentic and refreshing. Madhur is now our permanent dairy partner."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
+<img alt="User Portrait" class="w-full h-full object-cover" data-alt="Portrait of a smiling middle-aged man in casual attire, soft natural lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPnzSjSj9CA1iJvU1sDqzJyfRWxNCQFycfotfHxgGj2D3LWTVgMAZD2eyOO35PF9gw3G2Ek8y5jQ4vtKHPK9b01ESPTQEOVwampZaGc5jLXmfzXt8uJt1wYLQafLPmki37C2ojxsqUh0lc8IERpgsJVaMKW8Ad-q0zE809EdIXbolVeNkDnHma6xetxV-ynkcmkm-XEthdMYLmbBRIk3oAH0y6mD-cTTPfYUms-eSbRuTuPJCRZeidQzDS6ut4Cl4adZHqZ8SUeAH8"/>
+</div>
+<div>
+<p class="font-bold text-primary">Anand Deshmukh</p>
+<p class="text-xs text-on-surface-variant">Home Chef</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 2 -->
+<div class="p-10 rounded-xl bg-surface-container-low relative translate-y-8">
+<div class="flex gap-1 text-secondary mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<p class="text-on-surface italic leading-loose mb-8">"As a fitness enthusiast, I'm very picky about nutrition. Madhur's raw milk is clean, rich in proteins, and always arrives cold. Simply the best in town."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
+<img alt="User Portrait" class="w-full h-full object-cover" data-alt="Portrait of a young woman with a vibrant smile, natural outdoor lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5D-K9Y9lBQpx72CreWIohqZjxIs-9ZHsv5BssRhL2WhzWeCkHaLOMwOpWJInty4T4tAumPH32wPauC27ppR1ceoT4MLUyNXNSJAcLOprRFt5qEB0Nc_6AHpo82TFZc61ekLL7w1Duj9Uk5SErifUAU1YrBtcLqXqCT8qm1xwyMRTTuomKQWwO4YHIFKcJuU28drHV_d8o0Z7wFfgWpxfiCdOibzkmRAI7dsvVdtJ582N8FAQ6Gb-p1isvqqZVwjV_Oxku1PeO4mU3"/>
+</div>
+<div>
+<p class="font-bold text-primary">Priya Sharma</p>
+<p class="text-xs text-on-surface-variant">Yoga Instructor</p>
+</div>
+</div>
+</div>
+<!-- Testimonial 3 -->
+<div class="p-10 rounded-xl bg-surface-container-low relative">
+<div class="flex gap-1 text-secondary mb-6">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<p class="text-on-surface italic leading-loose mb-8">"The Lassi is so thick you could eat it with a spoon! My kids love the badam thandai, and I love that it has no added preservatives or colors."</p>
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
+<img alt="User Portrait" class="w-full h-full object-cover" data-alt="Portrait of a friendly man with glasses, professional but warm look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi8eKVxe4gSe-Y-UfOapftjfnFyWhAUzC0_oHhG190mIS0GMGm7E89qcAZjDoeluw35YGkhmFxB8mpW8BnOO-5omYEaQVzRsSarFdlWvjiWCdbOhl0JjlJkD6T7XBwJ2OibPgT1a9s6m3KRQTlZLjohzJnWP1r0voGQEME2GaAVRhmTVT2Eni7SrkDmGXxL7hGFBGmuZel6gQuhV44OYngYtRfGMuhy_9cUd7RtjGqI0sWyMG_Ky4yS40pW6DlO80Y1MYI05rMBRDq"/>
+</div>
+<div>
+<p class="font-bold text-primary">Dr. Vikram Raj</p>
+<p class="text-xs text-on-surface-variant">Pediatrician</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA Section -->
+<section class="py-24 px-8">
+<div class="max-w-7xl mx-auto rounded-xl overflow-hidden relative">
+<div class="bg-gradient-to-br from-primary to-primary-container p-20 text-center relative z-10">
+<h2 class="font-serif text-5xl text-on-primary font-bold mb-6 max-w-2xl mx-auto leading-tight">Order Fresh Today. Experience Purity Tomorrow.</h2>
+<p class="text-primary-fixed-dim text-lg mb-10 max-w-xl mx-auto">Join our community and get 20% off on your first weekly subscription. Pure dairy delivered to your doorstep.</p>
+<button class="bg-primary-fixed text-on-primary-fixed px-12 py-5 rounded-lg font-bold text-xl hover:scale-105 transition-transform shadow-2xl">
+                    Shop Now
+                </button>
+</div>
+<!-- Abstract background shape -->
+<div class="absolute -bottom-20 -left-20 w-96 h-96 bg-secondary rounded-full blur-[100px] opacity-20"></div>
+<div class="absolute -top-20 -right-20 w-96 h-96 bg-primary-fixed-dim rounded-full blur-[100px] opacity-10"></div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-emerald-950 dark:bg-zinc-950 full-width pt-20 pb-10">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-7xl mx-auto px-8">
+<div class="col-span-2 md:col-span-1">
+<div class="text-xl font-serif text-emerald-100 italic mb-6">Madhur</div>
+<p class="text-emerald-200/60 font-sans text-sm tracking-wide leading-loose">
+                    Bringing the gold standard of dairy back to your table with love, tradition, and uncompromising purity.
+                </p>
+</div>
+<div class="flex flex-col gap-4 font-sans text-sm tracking-wide leading-loose">
+<h4 class="text-emerald-50 font-bold mb-2">Company</h4>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-colors hover:translate-x-1 transition-transform" href="#">Sustainability</a>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-colors hover:translate-x-1 transition-transform" href="#">Wholesale</a>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-colors hover:translate-x-1 transition-transform" href="#">Careers</a>
+</div>
+<div class="flex flex-col gap-4 font-sans text-sm tracking-wide leading-loose">
+<h4 class="text-emerald-50 font-bold mb-2">Support</h4>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-colors hover:translate-x-1 transition-transform" href="#">Privacy Policy</a>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-colors hover:translate-x-1 transition-transform" href="#">Contact</a>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-colors hover:translate-x-1 transition-transform" href="#">FAQs</a>
+</div>
+<div class="flex flex-col gap-4">
+<h4 class="text-emerald-50 font-bold mb-2 font-sans text-sm">Newsletter</h4>
+<div class="flex bg-emerald-900/50 rounded-lg p-1 border border-emerald-800/30">
+<input class="bg-transparent border-none text-emerald-100 text-sm focus:ring-0 flex-grow placeholder:text-emerald-700" placeholder="Email" type="email"/>
+<button class="bg-emerald-50 text-emerald-950 p-2 rounded-lg">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<div class="max-w-7xl mx-auto px-8 mt-20 pt-8 border-t border-emerald-900/30 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="text-emerald-200/60 font-sans text-sm">© 2024 Madhur Dairy. Crafted for Purity.</p>
+<div class="flex gap-6">
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-all opacity-80 hover:opacity-100" href="#">Instagram</a>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-all opacity-80 hover:opacity-100" href="#">Facebook</a>
+<a class="text-emerald-200/60 hover:text-emerald-100 transition-all opacity-80 hover:opacity-100" href="#">Twitter</a>
+</div>
+</div>
+</footer>
+</body></html>
