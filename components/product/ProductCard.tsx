@@ -3,7 +3,6 @@
 // FILE: components/product/ProductCard.tsx
 // ═══════════════════════════════════════════════════════════════════════════════
 import { useRouter } from 'next/navigation';
-import { Plus } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { formatCurrency } from '@/lib/utils';
 import toast from 'react-hot-toast';
@@ -14,10 +13,10 @@ const CATEGORY_EMOJIS: Record<string, string> = {
   'flavoured-milk': '🍫',
 };
 
-const CATEGORY_COLORS: Record<string, string> = {
-  taak: 'bg-green-50 text-green-700 border-green-200',
-  lassi: 'bg-blue-50 text-blue-700 border-blue-200',
-  'flavoured-milk': 'bg-orange-50 text-orange-700 border-orange-200',
+const CATEGORY_LABELS: Record<string, string> = {
+  taak: 'Refreshing',
+  lassi: 'Classic',
+  'flavoured-milk': "Kid's Choice",
 };
 
 interface ProductCardProps {
@@ -60,66 +59,60 @@ export function ProductCard({ product }: ProductCardProps) {
   };
 
   const emoji = CATEGORY_EMOJIS[product.category] || '🥛';
-  const catColor =
-    CATEGORY_COLORS[product.category] || 'bg-gray-50 text-gray-600 border-gray-200';
+  const label = CATEGORY_LABELS[product.category] || 'Premium';
 
   return (
     <div
       onClick={handleCardClick}
       className="block group cursor-pointer"
     >
-      <div className="card-premium overflow-hidden h-full flex flex-col">
-        <div className="relative aspect-square bg-gradient-to-br from-gray-50 to-brand-green-pale rounded-2xl m-3 mb-0 overflow-hidden">
+      <div className="group bg-surface-container-low rounded-xl p-6 transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,51,41,0.1)] h-full flex flex-col">
+        <div className="aspect-[4/5] overflow-hidden rounded-lg mb-6 relative">
           {product.image ? (
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-7xl group-hover:scale-110 transition-transform duration-300 animate-float">
+            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-surface to-secondary-container/20">
+              <span className="text-7xl group-hover:scale-110 transition-transform duration-300">
                 {emoji}
               </span>
             </div>
           )}
 
+          <span className="absolute top-4 left-4 bg-secondary-container text-on-secondary-container text-xs font-bold px-3 py-1 rounded-full uppercase">
+            {label}
+          </span>
+          
           {product.featured && (
-            <div className="absolute top-3 left-3 bg-brand-green text-white text-xs font-bold px-2.5 py-1 rounded-full z-10">
-              Featured
+            <div className="absolute top-4 right-4 bg-primary text-on-primary text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase">
+              ★
             </div>
           )}
         </div>
 
-        <div className="p-5 flex flex-col flex-1">
-          <span
-            className={`self-start text-xs font-semibold px-2.5 py-1 rounded-full border mb-3 ${catColor}`}
-          >
-            {product.volume}
+        <h3 className="font-stitch-headline text-2xl text-primary mb-1">
+          {product.name}
+        </h3>
+        
+        <p className="text-on-surface-variant font-stitch-body text-sm mb-4 line-clamp-2 flex-grow">
+          {product.shortDescription || `Fresh ${product.category} with premium taste.`}
+        </p>
+        
+        <div className="flex items-center justify-between mt-auto">
+          <span className="text-2xl font-bold text-primary font-stitch-body">
+            {formatCurrency(product.price)}
           </span>
-
-          <h3 className="font-heading text-xl text-gray-900 mb-1 group-hover:text-brand-green transition-colors">
-            {product.name}
-          </h3>
-
-          <p className="text-sm text-gray-500 leading-relaxed flex-1 mb-4">
-            {product.shortDescription}
-          </p>
-
-          <div className="flex items-center justify-between mt-auto">
-            <span className="text-2xl font-bold text-gray-900">
-              {formatCurrency(product.price)}
-            </span>
-
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className="flex items-center gap-2 bg-brand-green text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-brand-green-light active:scale-95 transition-all shadow-md hover:shadow-lg"
-            >
-              <Plus size={16} />
-              Add
-            </button>
-          </div>
+          
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="bg-primary text-on-primary p-3 rounded-lg flex items-center justify-center hover:bg-primary-container transition-all"
+          >
+            <span className="material-symbols-outlined">add_shopping_cart</span>
+          </button>
         </div>
       </div>
     </div>

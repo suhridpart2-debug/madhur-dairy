@@ -36,7 +36,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <head />
-      <body className="font-body antialiased">
+      <body className="font-stitch-body bg-surface text-on-surface selection:bg-primary-fixed selection:text-on-primary-fixed antialiased">
         <SessionProvider session={session}>
           
           {/* Navbar */}

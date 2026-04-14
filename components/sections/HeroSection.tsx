@@ -1,181 +1,60 @@
-'use client';
 // ═══════════════════════════════════════════════════════════════════════════════
 // FILE: components/sections/HeroSection.tsx
 // ═══════════════════════════════════════════════════════════════════════════════
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRight, Star } from 'lucide-react';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 32 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.1, 0.25, 1], delay },
-  }),
-};
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden bg-hero-gradient pt-20">
-      <div
-        className="absolute top-1/4 right-0 w-[600px] h-[600px] rounded-full opacity-30 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(45,122,58,0.15) 0%, transparent 70%)',
-        }}
-      />
-      <div
-        className="absolute bottom-0 left-0 w-[400px] h-[400px] rounded-full opacity-20 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle, rgba(192,57,43,0.1) 0%, transparent 70%)',
-        }}
-      />
-
-      <div className="section-container w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-6 items-center min-h-[calc(100vh-80px)] py-16">
-          {/* Left: Text content */}
-          <div className="order-2 lg:order-1">
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0}
-              variants={fadeUp}
-              className="inline-flex items-center gap-2 bg-brand-green-pale text-brand-green text-xs font-bold px-4 py-2 rounded-full mb-6 border border-green-200"
-            >
-              <Star size={12} fill="currentColor" />
-              Fresh from Pune&apos;s finest dairy
-            </motion.div>
-
-            <motion.h1
-              initial="hidden"
-              animate="visible"
-              custom={0.1}
-              variants={fadeUp}
-              className="font-display text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 leading-tight mb-6"
-            >
-              Pure. <span className="text-gradient-green">Fresh.</span>
-              <br />
-              Delivered.
-            </motion.h1>
-
-            <motion.p
-              initial="hidden"
-              animate="visible"
-              custom={0.2}
-              variants={fadeUp}
-              className="text-lg sm:text-xl text-gray-600 leading-relaxed mb-8 max-w-lg"
-            >
-              Madhur&apos;s Taak, Lassi & Flavoured Milk — made fresh every morning with no preservatives. Order by 8 PM, delivered by next morning.
-            </motion.p>
-
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0.25}
-              variants={fadeUp}
-              className="flex items-center gap-4 mb-10"
-            >
-              <div className="flex -space-x-2">
-                {['🧑', '👩', '👨', '🧕'].map((emoji, i) => (
-                  <div
-                    key={i}
-                    className="w-8 h-8 rounded-full bg-brand-green-pale border-2 border-white flex items-center justify-center text-sm"
-                  >
-                    {emoji}
-                  </div>
-                ))}
-              </div>
-              <p className="text-sm text-gray-600">
-                <span className="font-bold text-gray-900">500+</span> happy customers in Pune
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0.35}
-              variants={fadeUp}
-              className="flex flex-col sm:flex-row gap-4"
-            >
-              <Link href="/products" className="btn-primary flex items-center justify-center gap-2 text-base">
-                Shop Now
-                <ArrowRight size={18} />
-              </Link>
-              <Link href="/about" className="btn-secondary flex items-center justify-center gap-2 text-base">
-                Our Story
-              </Link>
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              custom={0.45}
-              variants={fadeUp}
-              className="flex flex-wrap gap-2 mt-8"
-            >
-              {['🥛 No Preservatives', '🚚 Free Delivery', '📱 Order Online', '⭐ 100% Fresh'].map((tag) => (
-                <span
-                  key={tag}
-                  className="text-xs font-medium bg-white border border-gray-200 text-gray-600 px-3 py-1.5 rounded-full shadow-sm"
-                >
-                  {tag}
-                </span>
-              ))}
-            </motion.div>
+    <section className="relative overflow-hidden pt-32 pb-32">
+      <div className="max-w-7xl mx-auto px-8 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="z-10">
+          <span className="font-stitch-label text-sm uppercase tracking-[0.2em] text-on-secondary-container mb-6 block">Legacy of Pure Nutrition</span>
+          <h1 className="font-stitch-headline text-primary text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight mb-8">
+            Freshness that <br/><span className="italic font-normal">Whispers Purity.</span>
+          </h1>
+          <p className="text-on-surface-variant font-stitch-body text-lg leading-relaxed max-w-lg mb-10">
+            Straight from our lush green pastures to your breakfast table within hours. Experience the rich, creamy texture of nature's finest dairy.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <Link href="/products" className="bg-primary text-on-primary px-10 py-5 rounded-lg font-semibold text-lg hover:bg-primary-container transition-all shadow-xl shadow-primary/10">
+              Explore Freshness
+            </Link>
+            <Link href="/about" className="border border-outline-variant text-primary px-10 py-5 rounded-lg font-semibold text-lg hover:bg-surface-container-low transition-all">
+              Our Story
+            </Link>
           </div>
-
-          {/* Right: Floating product visual */}
-          <div className="order-1 lg:order-2 flex items-center justify-center relative">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.85 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1], delay: 0.1 }}
-              className="relative w-full max-w-md"
-            >
-              <div className="relative bg-white rounded-3xl shadow-premium p-8 border border-gray-100 animate-float">
-                {/* Real product image */}
-                <div
-                  className="w-full aspect-square rounded-2xl overflow-hidden mb-4"
-                  style={{
-                    background: 'linear-gradient(135deg, #E8F5E9 0%, #FEFCF7 100%)',
-                  }}
-                >
-                  <img
-                    src="/products/taak-pouch.png"
-                    alt="Madhur Taak"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                <div className="text-center">
-                  <p className="section-label mb-1">Bestseller</p>
-                  <h3 className="font-heading text-xl text-gray-900">Madhur Taak</h3>
-                  <p className="text-sm text-gray-500 mt-1">Fresh Buttermilk · 500ml</p>
-                  <p className="text-2xl font-bold text-brand-green mt-2">₹20</p>
-                </div>
-              </div>
-
-              <motion.div
-                animate={{ y: [0, -8, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                className="absolute -top-4 -left-4 bg-white rounded-2xl shadow-hover px-4 py-3 border border-gray-100"
-              >
-                <p className="text-xs font-bold text-gray-900">Made Fresh Daily</p>
-                <p className="text-xs text-gray-500">Every morning 🌅</p>
-              </motion.div>
-
-              <motion.div
-                animate={{ y: [0, 8, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-                className="absolute -bottom-4 -right-4 bg-brand-green text-white rounded-2xl shadow-green-glow px-4 py-3"
-              >
-                <p className="text-xs font-bold">Free Delivery</p>
-                <p className="text-xs opacity-80">All orders 🚚</p>
-              </motion.div>
-            </motion.div>
+        </div>
+        
+        <div className="relative">
+          <div className="relative rounded-xl overflow-hidden shadow-2xl">
+            <img 
+              alt="Premium Glass Bottle of Fresh Milk" 
+              className="w-full h-[600px] object-cover hover:scale-105 transition-transform duration-700" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhy8AFz5Mf1bU_6XMmdMPJOQEIkJmQ4TLk4SWjIdpCvlBHnWDDnxs2ESuw6i8SHE0B7I0ugSoJANDfVWjOSKtSgHiTLSN5K2kXhpM6CiWVS2eP36PKBYKqeFVVwbfK46IVmPg68kvdOqpldlu-EKqPtqvcCMY7uHk7kOGLM5Ln0Qf2r_UjlQryL2ohdEe561uWpai7z0avSMUHfBMAZjBGdpI4tk2ZIQbiwoxONAFSopAg_MAty751Ki0nq0K0auJ7575HIaC_2BCZ"
+            />
+          </div>
+          
+          {/* Floating Badges */}
+          <div className="absolute -top-6 -right-6 bg-surface-container-lowest p-6 rounded-xl shadow-xl flex items-center gap-4 animate-bounce hover:animate-none duration-[3000ms]">
+            <span className="material-symbols-outlined text-primary text-3xl" style={{ fontVariationSettings: "'FILL' 1" }}>eco</span>
+            <div>
+              <p className="font-bold text-primary leading-none">100% Fresh</p>
+              <p className="text-xs text-on-surface-variant mt-1">Non-Pasteurized</p>
+            </div>
+          </div>
+          
+          <div className="absolute bottom-10 -left-10 bg-white/80 backdrop-blur-md p-6 rounded-xl shadow-xl flex items-center gap-4">
+            <span className="material-symbols-outlined text-secondary text-3xl">local_shipping</span>
+            <div>
+              <p className="font-bold text-primary leading-none">Express Delivery</p>
+              <p className="text-xs text-on-surface-variant mt-1">Within 4 Hours</p>
+            </div>
           </div>
         </div>
       </div>
+      
+      {/* Decorative Background Element */}
+      <div className="absolute top-0 right-0 -z-10 w-1/2 h-full bg-gradient-to-l from-secondary-container/20 to-transparent opacity-50 blur-3xl"></div>
     </section>
   );
 }

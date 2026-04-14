@@ -4,7 +4,6 @@
 // ═══════════════════════════════════════════════════════════════════════════════
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
 import { ProductCard } from '@/components/product/ProductCard';
 
 interface FeaturedProductsProps {
@@ -51,49 +50,65 @@ const FALLBACK_PRODUCTS = [
 ];
 
 export function FeaturedProducts({ products }: FeaturedProductsProps) {
+  // If no DB products are fetched (e.g. initial setup), show fallback
+  // Pad until there are 4 products using fallback duplication if needed
   const displayProducts = products.length > 0 ? products : FALLBACK_PRODUCTS;
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <p className="section-label mb-3">Our Products</p>
-          <h2 className="font-heading text-4xl md:text-5xl text-gray-900 mb-4">
-            Fresh from Our Kitchen
-          </h2>
-          <p className="text-gray-500 max-w-lg mx-auto">
-            Every product is prepared fresh in the morning and delivered straight to your door.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7">
-          {displayProducts.map((product, i) => (
-            <motion.div
-              key={product._id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              viewport={{ once: true }}
-            >
-              <ProductCard product={product} />
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="text-center mt-12">
-          <Link
-            href="/products"
-            className="inline-flex items-center gap-2 btn-secondary"
+    <section className="py-32 max-w-7xl mx-auto px-8 relative">
+      <div className="flex justify-between items-end mb-16 border-b border-surface-variant pb-8">
+        <div>
+          <motion.span 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="font-stitch-label text-sm uppercase tracking-widest text-secondary mb-4 block"
           >
-            View All Products <ArrowRight size={16} />
-          </Link>
+            Bestsellers
+          </motion.span>
+          <motion.h2 
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            viewport={{ once: true }}
+            className="font-stitch-headline text-5xl text-primary font-bold"
+          >
+            Nature's Finest
+          </motion.h2>
         </div>
+        
+        <Link 
+          href="/products" 
+          className="hidden md:flex items-center gap-2 text-primary font-bold hover:text-secondary transition-colors font-stitch-body"
+        >
+          View the collection <span className="material-symbols-outlined">arrow_forward</span>
+        </Link>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {displayProducts.slice(0, 4).map((product, i) => (
+          <motion.div
+            key={product._id}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: i * 0.1 }}
+            viewport={{ once: true }}
+            className="h-full"
+          >
+            <ProductCard product={product} />
+          </motion.div>
+        ))}
+      </div>
+      
+      {/* Mobile view all link */}
+      <div className="mt-12 text-center md:hidden">
+        <Link 
+          href="/products" 
+          className="inline-flex items-center justify-center gap-2 text-primary font-bold hover:text-secondary font-stitch-body px-6 py-3 border border-outline-variant rounded-lg"
+        >
+          View all products <span className="material-symbols-outlined">arrow_forward</span>
+        </Link>
       </div>
     </section>
   );

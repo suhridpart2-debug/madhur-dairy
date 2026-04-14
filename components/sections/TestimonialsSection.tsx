@@ -1,79 +1,97 @@
-'use client';
 // ═══════════════════════════════════════════════════════════════════════════════
 // FILE: components/sections/TestimonialsSection.tsx
 // ═══════════════════════════════════════════════════════════════════════════════
-import { motion } from 'framer-motion';
-import { Star } from 'lucide-react';
-
-const testimonials = [
-  {
-    name: 'Priya Sharma',
-    location: 'Baner, Pune',
-    text: 'Madhur Taak is part of our morning routine now. It\'s fresh, perfectly spiced, and my kids love it. Best buttermilk in Pune!',
-    emoji: '👩',
-    product: 'Madhur Taak',
-  },
-  {
-    name: 'Rohan Kulkarni',
-    location: 'Hinjewadi, Pune',
-    text: 'The Lassi is incredibly thick and creamy. Reminds me of what my grandmother used to make. Delivery is always on time.',
-    emoji: '👨',
-    product: 'Madhur Lassi',
-  },
-  {
-    name: 'Sneha Joshi',
-    location: 'Wakad, Pune',
-    text: 'My son refuses to drink regular milk now. The Chocolate Flavoured Milk from Madhur is absolutely delicious and I feel good about the ingredients.',
-    emoji: '🧕',
-    product: 'Flavoured Milk',
-  },
-];
-
 export function TestimonialsSection() {
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="section-container">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12"
-        >
-          <p className="section-label mb-3">Testimonials</p>
-          <h2 className="font-heading text-4xl text-gray-900">What Our Customers Say</h2>
-        </motion.div>
+    <section className="py-32 bg-surface overflow-hidden">
+      <div className="max-w-7xl mx-auto px-8">
+        <div className="text-center mb-20">
+          <span className="font-stitch-label text-sm uppercase tracking-widest text-secondary mb-4 block">Testimonials</span>
+          <h2 className="font-stitch-headline text-5xl text-primary font-bold">What Our Community Says</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          {/* Testimonial 1 */}
+          <div className="p-10 rounded-xl bg-surface-container-low relative">
+            <div className="flex gap-1 text-secondary mb-6">
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+            </div>
+            <p className="text-on-surface font-stitch-body italic leading-loose mb-8">
+              "The quality of the Taak reminds me of my childhood summers in the village. It's incredibly authentic and refreshing. Madhur is now our permanent dairy partner."
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
+                <img 
+                  alt="User Portrait" 
+                  className="w-full h-full object-cover" 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPnzSjSj9CA1iJvU1sDqzJyfRWxNCQFycfotfHxgGj2D3LWTVgMAZD2eyOO35PF9gw3G2Ek8y5jQ4vtKHPK9b01ESPTQEOVwampZaGc5jLXmfzXt8uJt1wYLQafLPmki37C2ojxsqUh0lc8IERpgsJVaMKW8Ad-q0zE809EdIXbolVeNkDnHma6xetxV-ynkcmkm-XEthdMYLmbBRIk3oAH0y6mD-cTTPfYUms-eSbRuTuPJCRZeidQzDS6ut4Cl4adZHqZ8SUeAH8"
+                />
+              </div>
+              <div>
+                <p className="font-bold text-primary font-stitch-body">Anand Deshmukh</p>
+                <p className="text-xs text-on-surface-variant font-stitch-body">Home Chef</p>
+              </div>
+            </div>
+          </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-7">
-          {testimonials.map((t, i) => (
-            <motion.div
-              key={t.name}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              viewport={{ once: true }}
-              className="bg-white rounded-2xl p-7 border border-gray-100 shadow-card hover:shadow-hover transition-all"
-            >
-              <div className="flex items-center gap-1 mb-4">
-                {Array.from({ length: 5 }).map((_, j) => (
-                  <Star key={j} size={14} fill="#2D7A3A" className="text-brand-green" />
-                ))}
+          {/* Testimonial 2 */}
+          <div className="p-10 rounded-xl bg-surface-container-low relative translate-y-0 md:translate-y-8">
+            <div className="flex gap-1 text-secondary mb-6">
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+            </div>
+            <p className="text-on-surface font-stitch-body italic leading-loose mb-8">
+              "As a fitness enthusiast, I'm very picky about nutrition. Madhur's raw milk is clean, rich in proteins, and always arrives cold. Simply the best in town."
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
+                <img 
+                  alt="User Portrait" 
+                  className="w-full h-full object-cover" 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5D-K9Y9lBQpx72CreWIohqZjxIs-9ZHsv5BssRhL2WhzWeCkHaLOMwOpWJInty4T4tAumPH32wPauC27ppR1ceoT4MLUyNXNSJAcLOprRFt5qEB0Nc_6AHpo82TFZc61ekLL7w1Duj9Uk5SErifUAU1YrBtcLqXqCT8qm1xwyMRTTuomKQWwO4YHIFKcJuU28drHV_d8o0Z7wFfgWpxfiCdOibzkmRAI7dsvVdtJ582N8FAQ6Gb-p1isvqqZVwjV_Oxku1PeO4mU3"
+                />
               </div>
-              <p className="text-gray-700 leading-relaxed mb-5 text-sm">"{t.text}"</p>
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-brand-green-pale flex items-center justify-center text-xl">
-                  {t.emoji}
-                </div>
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm">{t.name}</p>
-                  <p className="text-xs text-gray-500">{t.location}</p>
-                </div>
-                <span className="ml-auto text-xs font-medium text-brand-green bg-brand-green-pale px-2 py-1 rounded-full">
-                  {t.product}
-                </span>
+              <div>
+                <p className="font-bold text-primary font-stitch-body">Priya Sharma</p>
+                <p className="text-xs text-on-surface-variant font-stitch-body">Yoga Instructor</p>
               </div>
-            </motion.div>
-          ))}
+            </div>
+          </div>
+
+          {/* Testimonial 3 */}
+          <div className="p-10 rounded-xl bg-surface-container-low relative">
+            <div className="flex gap-1 text-secondary mb-6">
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>star</span>
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 0" }}>star</span>
+            </div>
+            <p className="text-on-surface font-stitch-body italic leading-loose mb-8">
+              "The Lassi is so thick you could eat it with a spoon! My kids love the badam thandai, and I love that it has no added preservatives or colors."
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full overflow-hidden bg-secondary-container">
+                <img 
+                  alt="User Portrait" 
+                  className="w-full h-full object-cover" 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCi8eKVxe4gSe-Y-UfOapftjfnFyWhAUzC0_oHhG190mIS0GMGm7E89qcAZjDoeluw35YGkhmFxB8mpW8BnOO-5omYEaQVzRsSarFdlWvjiWCdbOhl0JjlJkD6T7XBwJ2OibPgT1a9s6m3KRQTlZLjohzJnWP1r0voGQEME2GaAVRhmTVT2Eni7SrkDmGXxL7hGFBGmuZel6gQuhV44OYngYtRfGMuhy_9cUd7RtjGqI0sWyMG_Ky4yS40pW6DlO80Y1MYI05rMBRDq"
+                />
+              </div>
+              <div>
+                <p className="font-bold text-primary font-stitch-body">Dr. Vikram Raj</p>
+                <p className="text-xs text-on-surface-variant font-stitch-body">Pediatrician</p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

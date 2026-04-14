@@ -1,117 +1,54 @@
-'use client';
 // ═══════════════════════════════════════════════════════════════════════════════
 // FILE: components/layout/Footer.tsx
 // ═══════════════════════════════════════════════════════════════════════════════
 import Link from 'next/link';
-import { Instagram, Facebook, Phone, Mail, MapPin } from 'lucide-react';
-import { APP_CONFIG } from '@/lib/constants';
 
 export function Footer() {
   return (
-    <footer className="bg-gray-900 text-gray-400 pt-16 pb-8">
-      <div className="section-container">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pb-12 border-b border-gray-800">
-          {/* Brand */}
-          <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-9 h-9 bg-brand-green rounded-xl flex items-center justify-center">
-                <span className="text-white font-display font-bold text-lg">M</span>
-              </div>
-              <span className="font-display text-2xl font-bold text-white">Madhur</span>
-            </div>
-            <p className="text-sm leading-relaxed text-gray-500 mb-5">
-              Pure dairy, made fresh every morning. No preservatives, no compromises — just the goodness of milk.
-            </p>
-            <div className="flex items-center gap-3">
-              <a
-                href={APP_CONFIG.social.instagram}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-gray-800 flex items-center justify-center hover:bg-brand-green transition-colors"
-              >
-                <Instagram size={16} />
-              </a>
-              <a
-                href={APP_CONFIG.social.facebook}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-xl bg-gray-800 flex items-center justify-center hover:bg-brand-green transition-colors"
-              >
-                <Facebook size={16} />
-              </a>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">Shop</h4>
-            <ul className="space-y-3">
-              {[
-                { label: 'Madhur Taak', href: '/products?category=taak' },
-                { label: 'Madhur Lassi', href: '/products?category=lassi' },
-                { label: 'Flavoured Milk', href: '/products?category=flavoured-milk' },
-                { label: 'All Products', href: '/products' },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">Company</h4>
-            <ul className="space-y-3">
-              {[
-                { label: 'Our Story', href: '/about' },
-                { label: 'FAQ', href: '/faq' },
-                { label: 'Contact Us', href: '/contact' },
-                { label: 'My Orders', href: '/orders' },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-white transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h4 className="text-white font-semibold text-sm mb-5 uppercase tracking-wider">Contact</h4>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3 text-sm">
-                <Phone size={15} className="mt-0.5 shrink-0 text-brand-green" />
-                <span>{APP_CONFIG.contact.phone}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm">
-                <Mail size={15} className="mt-0.5 shrink-0 text-brand-green" />
-                <span>{APP_CONFIG.contact.email}</span>
-              </li>
-              <li className="flex items-start gap-3 text-sm">
-                <MapPin size={15} className="mt-0.5 shrink-0 text-brand-green" />
-                <span>Pune, Maharashtra, India</span>
-              </li>
-            </ul>
-            <div className="mt-5 p-3 bg-gray-800 rounded-xl">
-              <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider mb-1">Delivery Hours</p>
-              <p className="text-xs text-gray-400">Mon–Sun · 7 AM – 8 PM</p>
-            </div>
+    <footer className="bg-emerald-950 w-full pt-20 pb-10">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-7xl mx-auto px-8">
+        <div className="col-span-2 md:col-span-1">
+          <div className="text-xl font-stitch-headline text-emerald-100 italic mb-6">Madhur</div>
+          <p className="text-emerald-200/60 font-stitch-body text-sm tracking-wide leading-loose">
+            Bringing the gold standard of dairy back to your table with love, tradition, and uncompromising purity.
+          </p>
+        </div>
+        
+        <div className="flex flex-col gap-4 font-stitch-body text-sm tracking-wide leading-loose">
+          <h4 className="text-emerald-50 font-bold mb-2">Company</h4>
+          <Link href="/about" className="text-emerald-200/60 hover:text-emerald-100 transition-all hover:translate-x-1">Sustainability</Link>
+          <Link href="/wholesale" className="text-emerald-200/60 hover:text-emerald-100 transition-all hover:translate-x-1">Wholesale</Link>
+          <Link href="/careers" className="text-emerald-200/60 hover:text-emerald-100 transition-all hover:translate-x-1">Careers</Link>
+        </div>
+        
+        <div className="flex flex-col gap-4 font-stitch-body text-sm tracking-wide leading-loose">
+          <h4 className="text-emerald-50 font-bold mb-2">Support</h4>
+          <Link href="/privacy" className="text-emerald-200/60 hover:text-emerald-100 transition-all hover:translate-x-1">Privacy Policy</Link>
+          <Link href="/contact" className="text-emerald-200/60 hover:text-emerald-100 transition-all hover:translate-x-1">Contact</Link>
+          <Link href="/faq" className="text-emerald-200/60 hover:text-emerald-100 transition-all hover:translate-x-1">FAQs</Link>
+        </div>
+        
+        <div className="flex flex-col gap-4">
+          <h4 className="text-emerald-50 font-bold mb-2 font-stitch-body text-sm">Newsletter</h4>
+          <div className="flex bg-emerald-900/50 rounded-lg p-1 border border-emerald-800/30">
+            <input 
+              className="bg-transparent border-none text-emerald-100 text-sm outline-none focus:ring-0 flex-grow placeholder:text-emerald-700 px-3" 
+              placeholder="Email" 
+              type="email" 
+            />
+            <button className="bg-emerald-50 text-emerald-950 p-2 rounded-lg flex items-center justify-center">
+              <span className="material-symbols-outlined text-[20px] leading-none">arrow_forward</span>
+            </button>
           </div>
         </div>
-
-        {/* Bottom bar */}
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-600">
-          <p>© {new Date().getFullYear()} Madhur Dairy. All rights reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="/privacy" className="hover:text-gray-400 transition-colors">Privacy Policy</Link>
-            <Link href="/terms" className="hover:text-gray-400 transition-colors">Terms of Service</Link>
-            <Link href="/delivery-policy" className="hover:text-gray-400 transition-colors">Delivery Policy</Link>
-          </div>
+      </div>
+      
+      <div className="max-w-7xl mx-auto px-8 mt-20 pt-8 border-t border-emerald-900/30 flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-emerald-200/60 font-stitch-body text-sm">© {new Date().getFullYear()} Madhur Dairy. Crafted for Purity.</p>
+        <div className="flex gap-6">
+          <a href="#" className="text-emerald-200/60 hover:text-emerald-100 transition-all opacity-80 hover:opacity-100">Instagram</a>
+          <a href="#" className="text-emerald-200/60 hover:text-emerald-100 transition-all opacity-80 hover:opacity-100">Facebook</a>
+          <a href="#" className="text-emerald-200/60 hover:text-emerald-100 transition-all opacity-80 hover:opacity-100">Twitter</a>
         </div>
       </div>
     </footer>

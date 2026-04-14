@@ -5,14 +5,13 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useSession, signOut } from 'next-auth/react';
-import { ShoppingCart, Menu, X, ChevronDown, User, Package, LogOut, Settings } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 
 const navLinks = [
-  { href: '/products', label: 'Shop' },
-  { href: '/about', label: 'Our Story' },
+  { href: '/products', label: 'Products' },
+  { href: '/about', label: 'Our Heritage' },
   { href: '/faq', label: 'FAQ' },
   { href: '/contact', label: 'Contact' },
 ];
@@ -32,32 +31,26 @@ export function Navbar() {
   }, []);
 
   return (
-    <nav
+    <header
       className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
+        'fixed top-0 left-0 right-0 z-50 w-full backdrop-blur-xl shadow-sm transition-all duration-300',
         scrolled
-          ? 'glass shadow-sm py-3'
-          : 'bg-transparent py-5'
+          ? 'bg-emerald-50/70 shadow-emerald-900/5'
+          : 'bg-transparent shadow-transparent'
       )}
     >
-      <div className="section-container flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 group">
-          <div className="w-9 h-9 bg-brand-green rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-            <span className="text-white font-display font-bold text-lg leading-none">M</span>
-          </div>
-          <span className="font-display text-2xl font-bold text-gray-900 tracking-tight">
-            Madhur
-          </span>
+      <nav className="flex justify-between items-center max-w-7xl mx-auto px-8 h-20">
+        <Link href="/" className="text-2xl font-stitch-headline font-bold text-emerald-950 tracking-tighter">
+          Madhur
         </Link>
 
         {/* Desktop Nav Links */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center space-x-10 font-stitch-headline text-lg tracking-tight leading-relaxed">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-gray-600 hover:text-brand-green font-medium text-sm transition-colors"
+              className="text-emerald-800/80 hover:text-emerald-950 transition-colors font-medium border-b-2 border-transparent hover:border-emerald-900 pb-1"
             >
               {link.label}
             </Link>
@@ -65,16 +58,15 @@ export function Navbar() {
         </div>
 
         {/* Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {/* Cart */}
           <button
             onClick={openCart}
-            className="relative p-2.5 rounded-xl hover:bg-gray-100 transition-colors"
-            aria-label="Open cart"
+            className="relative p-2 hover:bg-emerald-100/50 rounded-lg transition-all scale-95 duration-200 ease-in-out"
           >
-            <ShoppingCart size={20} className="text-gray-700" />
+            <span className="material-symbols-outlined text-emerald-900">shopping_bag</span>
             {itemCount > 0 && (
-              <span className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-brand-green text-white text-xs font-bold rounded-full flex items-center justify-center">
+              <span className="absolute -top-0 right-0 bg-primary text-on-primary text-[10px] font-bold px-1.5 py-0.5 rounded-full ring-2 ring-surface">
                 {itemCount > 9 ? '9+' : itemCount}
               </span>
             )}
@@ -85,7 +77,7 @@ export function Navbar() {
             <div className="relative">
               <button
                 onClick={() => setUserMenuOpen(!userMenuOpen)}
-                className="flex items-center gap-2 rounded-xl px-3 py-2 hover:bg-gray-100 transition-colors"
+                className="flex items-center gap-2 rounded-xl p-2 hover:bg-emerald-100/50 transition-colors"
               >
                 {session.user.image ? (
                   <Image
@@ -96,14 +88,12 @@ export function Navbar() {
                     className="rounded-full"
                   />
                 ) : (
-                  <div className="w-7 h-7 bg-brand-green-pale rounded-full flex items-center justify-center">
-                    <User size={14} className="text-brand-green" />
-                  </div>
+                  <span className="material-symbols-outlined text-emerald-900">account_circle</span>
                 )}
-                <span className="hidden md:block text-sm font-medium text-gray-700 max-w-[100px] truncate">
+                <span className="hidden md:block text-sm font-medium text-emerald-950 max-w-[100px] truncate">
                   {session.user.name?.split(' ')[0]}
                 </span>
-                <ChevronDown size={14} className="text-gray-500" />
+                <span className="material-symbols-outlined text-sm text-emerald-800">expand_more</span>
               </button>
 
               {userMenuOpen && (
@@ -112,39 +102,39 @@ export function Navbar() {
                     className="fixed inset-0 z-10"
                     onClick={() => setUserMenuOpen(false)}
                   />
-                  <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-hover border border-gray-100 py-2 z-20">
-                    <div className="px-4 py-2 border-b border-gray-100">
-                      <p className="text-sm font-semibold text-gray-900 truncate">{session.user.name}</p>
-                      <p className="text-xs text-gray-500 truncate">{session.user.email}</p>
+                  <div className="absolute right-0 top-full mt-2 w-52 bg-surface rounded-xl shadow-[0_10px_30px_rgba(0,51,41,0.1)] border border-outline-variant/30 py-2 z-20">
+                    <div className="px-4 py-2 border-b border-outline-variant/30">
+                      <p className="text-sm font-semibold text-primary truncate">{session.user.name}</p>
+                      <p className="text-xs text-on-surface-variant truncate">{session.user.email}</p>
                     </div>
                     <Link
                       href="/orders"
-                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                      className="flex items-center gap-3 px-4 py-2.5 text-sm text-primary hover:bg-surface-container-low transition-colors"
                       onClick={() => setUserMenuOpen(false)}
                     >
-                      <Package size={15} /> My Orders
+                      <span className="material-symbols-outlined text-lg">local_shipping</span> My Orders
                     </Link>
                     {session.user.role === 'admin' && (
                       <Link
                         href="/admin"
-                        className="flex items-center gap-3 px-4 py-2.5 text-sm text-brand-green font-medium hover:bg-brand-green-pale transition-colors"
+                        className="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-on-primary-container bg-primary-container/10 hover:bg-primary-container/20 transition-colors"
                         onClick={() => setUserMenuOpen(false)}
                       >
-                        <Settings size={15} /> Admin Panel
+                        <span className="material-symbols-outlined text-lg">settings</span> Admin Panel
                       </Link>
                     )}
                     <button
                       onClick={() => { signOut({ callbackUrl: '/' }); setUserMenuOpen(false); }}
-                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                      className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-error hover:bg-error-container/50 transition-colors"
                     >
-                      <LogOut size={15} /> Sign Out
+                      <span className="material-symbols-outlined text-lg">logout</span> Sign Out
                     </button>
                   </div>
                 </>
               )}
             </div>
           ) : (
-            <Link href="/auth/signin" className="btn-primary text-sm py-2.5 px-5">
+            <Link href="/auth/signin" className="bg-primary text-on-primary px-4 py-2 rounded-lg font-semibold text-sm hover:bg-primary-container transition-all">
               Sign In
             </Link>
           )}
@@ -152,21 +142,21 @@ export function Navbar() {
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden p-2.5 rounded-xl hover:bg-gray-100 transition-colors"
+            className="md:hidden text-emerald-900"
           >
-            {menuOpen ? <X size={20} /> : <Menu size={20} />}
+            <span className="material-symbols-outlined">{menuOpen ? 'close' : 'menu'}</span>
           </button>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Menu */}
       {menuOpen && (
-        <div className="md:hidden glass mt-2 mx-4 rounded-2xl shadow-hover border border-gray-100 p-4">
+        <div className="md:hidden bg-emerald-50 backdrop-blur-xl shadow-lg border-t border-emerald-900/10 p-4">
           {navLinks.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="block px-4 py-3 text-gray-700 hover:text-brand-green hover:bg-brand-green-pale rounded-xl transition-colors font-medium"
+              className="block px-4 py-3 text-emerald-950 font-stitch-headline text-lg hover:bg-emerald-100/50 rounded-xl transition-colors"
               onClick={() => setMenuOpen(false)}
             >
               {link.label}
@@ -174,6 +164,6 @@ export function Navbar() {
           ))}
         </div>
       )}
-    </nav>
+    </header>
   );
 }
